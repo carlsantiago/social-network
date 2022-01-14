@@ -1,6 +1,10 @@
 const { Schema, model } = require("mongoose");
 const thoughtSchema = require("./Thought");
-import { isEmail } from "validator";
+
+var validateEmail = function (email) {
+  var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  return re.test(email);
+};
 
 const userSchema = new Schema(
   {
@@ -14,12 +18,12 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      validate: [isEmail, "Please fill a valid email address"],
+      validate: [validateEmail, "Please fill a valid email address"],
     },
     thoughts: [thoughtSchema],
     friends: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "User",
       },
     ],
@@ -55,4 +59,5 @@ User.find({}).exec((err, collection) => {
     );
   }
 });
+
 module.exports = User;
