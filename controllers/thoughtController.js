@@ -18,7 +18,7 @@ module.exports = {
   },
   createThought(req, res) {
     Thought.create(req.body)
-      .then((thought) => res.jason(thought))
+      .then((thought) => res.json(thought))
       .catch((err) => {
         console.log(err);
         return res.status(500).json(err);
@@ -39,7 +39,7 @@ module.exports = {
   },
   deleteThought(req, res) {
     Thought.findOneAndDelete({ _id: req.params.thoughtId })
-      .then(() => res.json({ message: "Course and students deleted!" }))
+      .then(() => res.json({ message: "Thought deleted!" }))
       .catch((err) => res.status(500).json(err));
   },
 };

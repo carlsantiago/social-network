@@ -1,4 +1,5 @@
-const { Schema, model } = require("mongoose");
+const { model, Schema } = require("mongoose");
+const mongoose = require("mongoose");
 const thoughtSchema = require("./Thought");
 
 var validateEmail = function (email) {
@@ -20,7 +21,12 @@ const userSchema = new Schema(
       unique: true,
       validate: [validateEmail, "Please fill a valid email address"],
     },
-    thoughts: [thoughtSchema],
+    thoughts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "thought",
+      },
+    ],
     friends: [
       {
         type: Schema.Types.ObjectId,
